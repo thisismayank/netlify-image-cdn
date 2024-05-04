@@ -16,7 +16,7 @@ function ImageCarousel() {
   const [fit, setFit] = useState("contain");
   const [format, setFormat] = useState("webp");
 
-  const baseUrl = "https://mysitename.netlify.app/.netlify/images";
+  const baseUrl = "https://mayank-cdn-test.netlify.app/.netlify/images";
 
   const buildImageUrl = () => {
     const { url } = images[selectedImageIndex];
