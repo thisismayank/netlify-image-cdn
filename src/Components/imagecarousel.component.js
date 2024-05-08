@@ -2,16 +2,12 @@ import React, { useState } from "react";
 
 function ImageCarousel() {
   const images = [
-    { url: "/ronaldo-3.jpeg", alt: "Ronaldo" },
-    { url: "/ronaldo-2.jpeg", alt: "UEFA" },
+    { url: "/modric.jpeg", alt: "Modric" },
+    { url: "/madrid.jpeg", alt: "Madrid" },
     { url: "/ozil.jpeg", alt: "Ozil" },
-    { url: "/neymar.jpeg", alt: "Neymar" },
-    { url: "/football-1.jpeg", alt: "All" },
+    { url: "/ronaldo-1.jpeg", alt: "Ronaldo" },
+    { url: "/benzema.jpeg", alt: "Benzema" },
     { url: "/messi.jpeg", alt: "Messi" },
-    {
-      url: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGZvb3RiYWxsfGVufDB8fDB8fHww",
-      alt: "football",
-    },
   ];
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
