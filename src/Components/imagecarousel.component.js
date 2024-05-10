@@ -71,7 +71,6 @@ function ImageCarousel() {
     setPrevFileSize(fileSize);
     const response = await fetch(buildImageUrl());
     const blob = await response.blob();
-    console.log("BLOB", blob);
     setFileSize(blob.size / 1024); // Convert bytes to KB
   };
 

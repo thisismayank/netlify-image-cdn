@@ -1,0 +1,5 @@
+# netlify.toml
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+  Netlify-CDN-Cache-Control = "public, max-age=60"
