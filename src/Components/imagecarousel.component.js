@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -38,7 +38,8 @@ function ImageCarousel() {
   const [helperText, setHelperText] = useState(
     "Value must be between 1 and 100"
   );
-
+  const [fileSize, setFileSize] = useState(0);
+  const [prevFileSize, setPrevFileSize] = useState(0);
   const handleChange = (event) => {
     const value = event.target.value;
     setQuality(value);
@@ -51,8 +52,6 @@ function ImageCarousel() {
       );
       if (value > 100) {
         setQuality(100);
-      } else {
-        setQuality(1);
       }
     } else {
       setError(false);
@@ -68,10 +67,20 @@ function ImageCarousel() {
     )}&w=${imageWidth}&h=${imageHeight}&fit=${fit}&fm=${format}&q=${quality}`;
   };
 
+  const fetchImageSize = async () => {
+    setPrevFileSize(fileSize);
+    const response = await fetch(buildImageUrl());
+    const blob = await response.blob();
+    console.log("BLOB", blob);
+    setFileSize(blob.size / 1024); // Convert bytes to KB
+  };
+
   const handleFitChange = (event) => {
     setFit(event.target.value);
   };
-
+  useEffect(() => {
+    fetchImageSize();
+  }, [imageWidth, imageHeight, fit, format, quality]);
   return (
     <Box sx={{ p: 4 }}>
       <Typography
@@ -84,7 +93,15 @@ function ImageCarousel() {
       <Paper
         sx={{ mb: 2, p: 2, textAlign: "center", backgroundColor: "#b0c7c7" }}
       >
-        <Typography variant="caption" sx={{ wordWrap: "break-word" }}>
+        <Typography
+          variant="caption"
+          sx={{
+            wordWrap: "break-word",
+            fontWeight: "bold",
+            fontSize: "1em",
+            color: "crimson",
+          }}
+        >
           {buildImageUrl()}
         </Typography>
       </Paper>
@@ -170,12 +187,6 @@ function ImageCarousel() {
             size="small"
             fullWidth
             sx={{ mb: 2 }}
-            InputProps={{
-              inputProps: {
-                min: 1,
-                max: 100,
-              },
-            }}
           />
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel>Fit</InputLabel>
@@ -198,6 +209,35 @@ function ImageCarousel() {
               <MenuItem value="avif">AVIF</MenuItem>
             </Select>
           </FormControl>
+          <Box sx={{ mt: 3 }}>
+            <Typography
+              variant="body2"
+              color="red"
+              style={{
+                fontWeight: "bold",
+                backgroundColor: "yellow",
+                fontSize: "1.5em",
+
+                borderRadius: 8,
+              }}
+            >
+              Size now: {fileSize.toFixed(2)} KB
+            </Typography>
+            <br />
+            <Typography
+              variant="body2"
+              color="#004dff"
+              style={{
+                fontWeight: "bold",
+                backgroundColor: "#e4e4e4",
+                padding: 8,
+                borderRadius: 8,
+              }}
+            >
+              Prev size @ [{imageWidth}W x {imageHeight}H x {quality}Q x {fit} x{" "}
+              {format.toUpperCase()}] : {prevFileSize.toFixed(2)} KB
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
