@@ -25,7 +25,9 @@ function ImageManager() {
 
   const fetchStores = async () => {
     try {
-      const response = await fetch("/.netlify/functions/listStores");
+      const response = await fetch(
+        "https://mayank-cdn-test.netlify.app/blobs/.netlify/functions/listStores"
+      );
       if (response.ok) {
         const data = await response.json();
         setStores(data);
@@ -43,7 +45,9 @@ function ImageManager() {
   const fetchImageWithKey = async (key) => {
     console.log("fetch image key", key);
     const response = await fetch(
-      `/.netlify/functions/getImage?key=${encodeURIComponent(key)}`
+      `https://mayank-cdn-test.netlify.app/.netlify/functions/getImage?key=${encodeURIComponent(
+        key
+      )}`
     );
 
     if (response.ok) {
@@ -57,7 +61,7 @@ function ImageManager() {
     if (!selectedStore) return;
     try {
       const response = await fetch(
-        `/.netlify/functions/listBlobs?store=${encodeURIComponent(
+        `https://mayank-cdn-test.netlify.app/.netlify/functions/listBlobs?store=${encodeURIComponent(
           selectedStore
         )}`
       );
@@ -85,10 +89,13 @@ function ImageManager() {
     formData.append("store", selectedStore);
 
     try {
-      const response = await fetch("/.netlify/functions/uploadImage", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://mayank-cdn-test.netlify.app/.netlify/functions/uploadImage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       if (response.ok) {
         await response.json();
         alert("Upload Successful!");
@@ -106,7 +113,7 @@ function ImageManager() {
     if (!selectedStore) return;
     try {
       const response = await fetch(
-        `/.netlify/functions/deleteBlob?key=${encodeURIComponent(
+        `https://mayank-cdn-test.netlify.app/.netlify/functions/deleteBlob?key=${encodeURIComponent(
           key
         )}&store=${encodeURIComponent(selectedStore)}`,
         { method: "DELETE" }
@@ -155,11 +162,14 @@ function ImageManager() {
     }
 
     try {
-      const response = await fetch("/.netlify/functions/createStore", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ storeName }),
-      });
+      const response = await fetch(
+        "https://mayank-cdn-test.netlify.app/.netlify/functions/createStore",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ storeName }),
+        }
+      );
 
       if (response.ok) {
         alert("Store created successfully!");
