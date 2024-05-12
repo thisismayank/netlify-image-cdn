@@ -7,7 +7,7 @@
 # Set the build settings
 [build]
   publish = "build"  # Directory that Netlify will deploy
-  command = "npm run build"  # Build command to compile your React app
+
 
 # Define custom headers
 [[headers]]
