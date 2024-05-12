@@ -36,7 +36,7 @@ const Navbar = () => {
               </Link>
             </>
           )}
-          {location.pathname === "#" && (
+          {location.pathname === "/" && (
             <>
               <img src="./logo.png" alt="logo" height={30} width={100} />
               <Typography
