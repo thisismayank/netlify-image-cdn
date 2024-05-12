@@ -9,6 +9,9 @@ import {
   InputLabel,
   FormControl,
   Paper,
+  Grid,
+  Slider,
+  Input,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -40,6 +43,7 @@ function ImageCarousel() {
   );
   const [fileSize, setFileSize] = useState(0);
   const [prevFileSize, setPrevFileSize] = useState(0);
+  const [value, setValue] = React.useState(30);
   const handleChange = (event) => {
     const value = event.target.value;
     setQuality(value);
@@ -80,6 +84,16 @@ function ImageCarousel() {
   useEffect(() => {
     fetchImageSize();
   }, [imageWidth, imageHeight, fit, format, quality]);
+  const handleBlur = () => {
+    if (value < 0) {
+      setQuality(0);
+    } else if (value > 100) {
+      setQuality(100);
+    }
+  };
+  const handleSliderChange = (event, newValue) => {
+    setQuality(newValue);
+  };
   return (
     <Box sx={{ p: 4 }}>
       <Paper
@@ -138,8 +152,8 @@ function ImageCarousel() {
           }}
         >
           <img src={buildImageUrl()} alt={images[selectedImageIndex].alt} />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            {fit}:{" "}
+          <Typography variant="caption" color="text.secondary" sx={{ mt: 2 }}>
+            {fit.toUpperCase()}:{" "}
             {fit === "contain"
               ? "Resizes the image to fit within the given dimension while preserving its aspect ratio."
               : fit === "cover"
@@ -168,18 +182,45 @@ function ImageCarousel() {
             fullWidth
             sx={{ mb: 2 }}
           />
-          <TextField
-            label="Quality"
-            type="number"
-            value={quality}
-            onChange={handleChange}
-            helperText={helperText}
-            error={error} // Conditionally render error state
-            variant="outlined"
-            size="small"
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+          <Box
+            style={{
+              backgroundColor: "#80808024",
+              padding: 8,
+              borderRadius: 10,
+              margin: "16px 0px",
+            }}
+          >
+            <Slider
+              value={quality}
+              onChange={handleSliderChange}
+              aria-labelledby="input-slider"
+              sx={{ color: "#004646" }}
+            />
+
+            <Typography
+              id="input-slider"
+              style={{
+                display: "inline-block",
+                paddingRight: 16,
+                marginBottom: 16,
+              }}
+            >
+              Quality:
+            </Typography>
+            <Input
+              value={quality}
+              size="small"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              inputProps={{
+                step: 10,
+                min: 0,
+                max: 100,
+                type: "number",
+                "aria-labelledby": "input-slider",
+              }}
+            />
+          </Box>
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel>Fit</InputLabel>
             <Select value={fit} label="Fit" onChange={handleFitChange}>
