@@ -3,3 +3,20 @@
   for = "/api/*"
   [headers.values]
   Netlify-CDN-Cache-Control = "public, max-age=60"
+
+# Set the build settings
+[build]
+  publish = "build"  # Directory that Netlify will deploy
+  command = "npm run build"  # Build command to compile your React app
+
+# Define custom headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; object-src 'none'"
+    X-Frame-Options = "DENY"
+
+# Function settings
+[functions]
+  directory = "netlify/functions"  # Directory where your Netlify Functions are stored
+  node_bundler = "esbuild"  # Optional: Specify the JavaScript bundler (default is "zisi")

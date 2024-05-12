@@ -82,13 +82,6 @@ function ImageCarousel() {
   }, [imageWidth, imageHeight, fit, format, quality]);
   return (
     <Box sx={{ p: 4 }}>
-      <Typography
-        variant="h4"
-        component="h1"
-        sx={{ fontWeight: "bold", textAlign: "center", mb: 1 }}
-      >
-        Netlify Challenge
-      </Typography>
       <Paper
         sx={{ mb: 2, p: 2, textAlign: "center", backgroundColor: "#b0c7c7" }}
       >
